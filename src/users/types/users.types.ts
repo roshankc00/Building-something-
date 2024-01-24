@@ -23,3 +23,21 @@ export class RegisterResponse {
   @Field(() => ErrorType, { nullable: true })
   error?: ErrorType;
 }
+
+@ObjectType()
+export class LoginResponse {
+  @Field(() => User, { nullable: true })
+  user?: User | any;
+
+  @Field({ nullable: true })
+  accessToken?: string;
+
+  @Field({ nullable: true })
+  message?: string;
+
+  @Field()
+  success: boolean;
+
+  @Field(() => ErrorType, { nullable: true })
+  error?: ErrorType;
+}

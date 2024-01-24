@@ -8,6 +8,10 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma/prisma.service';
 import { UsersModule } from './users/users.module';
+import { ColorsModule } from './colors/colors.module';
+import { SizesModule } from './sizes/sizes.module';
+import { CategoriesModule } from './categories/categories.module';
+import { StoresModule } from './stores/stores.module';
 
 @Module({
   imports: [
@@ -21,6 +25,10 @@ import { UsersModule } from './users/users.module';
       },
     }),
     UsersModule,
+    ColorsModule,
+    SizesModule,
+    CategoriesModule,
+    StoresModule,
   ],
   controllers: [],
   providers: [ConfigService, JwtService, PrismaService],
