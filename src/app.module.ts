@@ -7,6 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma/prisma.service';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { PrismaService } from '../prisma/prisma.service';
         federation: 2,
       },
     }),
+    UsersModule,
   ],
   controllers: [],
   providers: [ConfigService, JwtService, PrismaService],
