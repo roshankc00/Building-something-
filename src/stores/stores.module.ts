@@ -7,7 +7,7 @@ import { StoreResolver } from './stores.resolver';
 
 @Module({
   imports: [],
-  exports: [],
+  exports: [StoresService],
   providers: [
     ConfigService,
     JwtService,
