@@ -14,7 +14,6 @@ export class SizesDto {
   value: string;
 
   @Field()
-  @IsNotEmpty()
-  @IsString({ message: 'Name must be string' })
-  userId: string;
+  @IsNotEmpty({ message: 'StoreIdField field is required' })
+  storeId: string;
 }

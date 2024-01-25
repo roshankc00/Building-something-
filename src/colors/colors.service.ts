@@ -25,11 +25,16 @@ export class ColorsService {
   }
 
   async findSingle(id: string) {
-    return await this.prismaDb.color.findUnique({
+    const color = await this.prismaDb.color.findUnique({
       where: {
         id,
       },
     });
+    if (!color) {
+      throw new NotFoundException('Color with this id doesnt exist');
+    } else {
+      return color;
+    }
   }
 
   async findAllColorsOfStore(storeId: string) {

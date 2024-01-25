@@ -17,13 +17,13 @@ export class ColorResolver {
   }
 
   @Query(() => [Color], {
-    name: 'stores',
+    name: 'colorsOfStore',
   })
   async findAllStore(@Args('storeId') storeId: string) {
     return await this.colorService.findAllColorsOfStore(storeId);
   }
 
-  @Query(() => Color, { name: 'store' })
+  @Query(() => Color, { name: 'color' })
   async findOneStore(@Args('id', { type: () => String }) id: string) {
     return await this.colorService.findSingle(id);
   }
