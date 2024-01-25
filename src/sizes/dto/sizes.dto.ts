@@ -1,29 +1,20 @@
 import { InputType, Field } from '@nestjs/graphql';
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsString,
-  MinLength,
-  minLength,
-} from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 @InputType()
-export class StoreDto {
+export class SizesDto {
   @Field()
   @IsNotEmpty()
   @IsString({ message: 'Name must be string' })
   name: string;
+
+  @Field()
+  @IsNotEmpty()
+  @IsString({ message: 'Name must be string' })
+  value: string;
 
   @Field()
   @IsNotEmpty()
   @IsString({ message: 'Name must be string' })
   userId: string;
-}
-
-@InputType()
-export class UpdateStoreDto {
-  @Field()
-  @IsNotEmpty()
-  @IsString({ message: 'Name must be string' })
-  name: string;
 }

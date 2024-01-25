@@ -9,16 +9,7 @@ export class User {
   name: string;
 
   @Field()
-  email: string;
-
-  @Field()
-  phoneNumber: string;
-
-  @Field()
-  password: string;
-
-  @Field()
-  role: String;
+  value: string;
 
   @Field()
   createdAt: Date;

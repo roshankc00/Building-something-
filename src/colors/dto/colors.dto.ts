@@ -19,11 +19,6 @@ export class ColorsDto {
   value: string;
 
   @Field()
-  @IsNotEmpty({ message: 'Email is required.' })
-  @IsEmail({}, { message: 'Email is invalid.' })
-  email: string;
-
-  @Field()
   @IsNotEmpty({ message: 'StoreIdField field is required' })
   storeId: string;
 }

@@ -1,7 +1,7 @@
 import { ObjectType, Field } from '@nestjs/graphql';
 
 @ObjectType()
-export class User {
+export class Store {
   @Field()
   id: string;
 
@@ -9,16 +9,10 @@ export class User {
   name: string;
 
   @Field()
-  email: string;
+  userId: string;
 
   @Field()
-  phoneNumber: string;
-
-  @Field()
-  password: string;
-
-  @Field()
-  role: String;
+  isActive: boolean;
 
   @Field()
   createdAt: Date;
