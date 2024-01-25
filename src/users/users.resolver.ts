@@ -3,6 +3,8 @@ import { UsersService } from './users.service';
 import { LoginResponse, RegisterResponse } from './types/users.types';
 import { RegisterDto } from './dto/users.dto';
 import { User } from './entities/users.entity';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'src/core/guards/auth.guard';
 
 @Resolver('User')
 export class UserResolver {
@@ -42,5 +44,11 @@ export class UserResolver {
   })
   async findAll() {
     return await this.userService.getAllUser();
+  }
+
+  @Query(() => User, { name: 'currentUser' })
+  @UseGuards(AuthGuard)
+  getCurrentUser(@Context() context) {
+    return context.req.user;
   }
 }
