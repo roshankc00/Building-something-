@@ -136,17 +136,19 @@ model CartItem {
 }
 
 model Order {
-  id         String      @id @default(uuid())
-  storeId    String
-  store      Store       @relation(fields: [storeId], references: [id])
-  orderItems OrderItem[]
-  userId     String
-  user       User        @relation(fields: [userId], references: [id])
-  isPaid     Boolean     @default(false)
-  phone      String      @default("")
-  address    String      @default("")
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+  id            String      @id @default(uuid())
+  storeId       String
+  store         Store       @relation(fields: [storeId], references: [id])
+  orderItems    OrderItem[]
+  userId        String
+  user          User        @relation(fields: [userId], references: [id])
+  isPaid        Boolean     @default(false)
+  phone         String      @default("")
+  address       String      @default("")
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  paymentStatus Boolean     @default(false)
+  isDelivered   Boolean     @default(false)
 
   @@unique([storeId, userId])
   @@index([storeId])
