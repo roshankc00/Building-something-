@@ -7,7 +7,7 @@ import { RolesConstant } from 'src/utils/constants';
 import { CategoryService } from './categories.service';
 import { CreateCategoryResponse } from './types/catgegories.types';
 import { Category } from './entities/categories.entiry';
-import { CategoryDto } from './dto/categories.dtos';
+import { CategoryDto, UpdateCategoryDto } from './dto/categories.dtos';
 
 @UseFilters(GraphQLErrorFilter)
 @Resolver('Category')
@@ -48,5 +48,16 @@ export class CategoryResolver {
     @Args('id') id: string,
   ): Promise<CreateCategoryResponse> {
     return await this.categoryService.delete(storeId, id);
+  }
+
+  @Mutation(() => CreateCategoryResponse)
+  @UseGuards(AuthGuard)
+  @Roles(RolesConstant.Seller)
+  async updateCategory(
+    @Args('id') id: string,
+    @Args('updatecategoryDto') updateCategoryDto: UpdateCategoryDto,
+    @Context() context: any,
+  ): Promise<CreateCategoryResponse> {
+    return await this.categoryService.update(id, updateCategoryDto);
   }
 }

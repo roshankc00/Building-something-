@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'prisma/prisma.service';
-import { CategoryDto } from './dto/categories.dtos';
+import { CategoryDto, UpdateCategoryDto } from './dto/categories.dtos';
 import { CreateCategoryResponse } from './types/catgegories.types';
 import { Category } from '@prisma/client';
 
@@ -74,6 +74,23 @@ export class CategoryService {
       success: true,
       message: 'category with this id deleted successfully',
       category,
+    };
+  }
+
+  async update(
+    id: string,
+    updateCategoryDto: UpdateCategoryDto,
+  ): Promise<CreateCategoryResponse> {
+    const updatedCategory = await this.prismaDb.category.update({
+      where: {
+        id,
+      },
+      data: updateCategoryDto,
+    });
+    return {
+      category: updatedCategory,
+      success: true,
+      message: 'Category updated successfully',
     };
   }
 }

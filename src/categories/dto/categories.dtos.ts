@@ -16,3 +16,15 @@ export class CategoryDto {
   @IsNotEmpty({ message: 'StoreIdField field is required' })
   storeId: string;
 }
+
+@InputType()
+export class UpdateCategoryDto {
+  @Field()
+  @IsNotEmpty()
+  @IsString({ message: 'Name must be string' })
+  name: string;
+
+  @Field()
+  @IsNotEmpty({ message: 'value must be of type string' })
+  description: string;
+}
