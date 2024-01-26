@@ -27,6 +27,8 @@ model User {
   role        Role     @default(User)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  cart        Cart[]
+  order       Order[]
 }
 
 model Store {
@@ -74,8 +76,9 @@ model Product {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
-  orderItems OrderItem[]
-  cartItems  CartItem[]
+  orderItems   OrderItem[]
+  cartItems    CartItem[]
+  WishListItem WishListItem[]
 }
 
 model Category {
@@ -115,14 +118,19 @@ model Cart {
   id        String     @id @default(uuid())
   storeId   String
   store     Store      @relation(fields: [storeId], references: [id])
-  cartId    String
+  userId    String
+  user      User       @relation(fields: [userId], references: [id])
+  cartId    String?
   cartItems CartItem[]
+
+  @@unique([userId, cartId])
 }
 
 model CartItem {
   id        String  @id @default(uuid())
   cartId    String
-  cart      Cart    @relation(fields: [cartId], references: [id])
+  quantity  Int     @default(1)
+  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
   productId String
   product   Product @relation(fields: [productId], references: [id])
 }
@@ -132,19 +140,45 @@ model Order {
   storeId    String
   store      Store       @relation(fields: [storeId], references: [id])
   orderItems OrderItem[]
+  userId     String
+  user       User        @relation(fields: [userId], references: [id])
   isPaid     Boolean     @default(false)
   phone      String      @default("")
   address    String      @default("")
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
 
+  @@unique([storeId, userId])
   @@index([storeId])
 }
 
 model OrderItem {
-  id        String  @id @default(uuid())
+  id        String   @id @default(uuid())
   orderId   String
-  orders    Order   @relation(fields: [orderId], references: [id])
+  orders    Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
   productId String
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Wishlist {
+  id            String         @id @default(uuid())
+  userId        String
+  storeId       String
+  wishListItems WishListItem[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@unique([userId, storeId])
+}
+
+model WishListItem {
+  id         String   @id @default(uuid())
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  wishlistId String
+  wishlist   Wishlist @relation(fields: [wishlistId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
