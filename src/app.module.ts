@@ -12,6 +12,7 @@ import { ColorsModule } from './colors/colors.module';
 import { SizesModule } from './sizes/sizes.module';
 import { CategoriesModule } from './categories/categories.module';
 import { StoresModule } from './stores/stores.module';
+import { ProductModule } from './products/products.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { StoresModule } from './stores/stores.module';
     ColorsModule,
     SizesModule,
     CategoriesModule,
+    ProductModule,
   ],
   controllers: [],
   providers: [ConfigService, JwtService, PrismaService],

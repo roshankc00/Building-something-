@@ -62,7 +62,7 @@ model Product {
   description String    @db.Text
   storeId     String
   store       Store     @relation(fields: [storeId], references: [id])
-  categoryId  String?
+  categoryId  String
   category    Category? @relation(fields: [categoryId], references: [id])
   sizeId      String?
   size        Size?     @relation(fields: [sizeId], references: [id])
