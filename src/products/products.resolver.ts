@@ -3,6 +3,7 @@ import { ProductService } from './products.service';
 import { CreateProductResponse } from './types/products.types';
 import { ProductDto, UpdateProductDto } from './dtos/products.dtos';
 import { Product } from './entities/products.entiry';
+import { ProductSortInput } from './dtos/getProduct.dto';
 
 @Resolver('Product')
 export class ProductResolver {
@@ -24,5 +25,14 @@ export class ProductResolver {
   @Query(() => Product, { name: 'product' })
   async getSingleProduct(@Args('id') id: string) {
     return await this.productService.getSingleProduct(id);
+  }
+
+  @Query(() => [Product], { name: 'Products' })
+  async getAllProducts(
+    @Args('storeId') storeId: string,
+    @Args({ name: 'sort', type: () => ProductSortInput, nullable: true })
+    sort?: ProductSortInput,
+  ) {
+    return this.productService.getAllProducts(storeId, sort);
   }
 }
