@@ -16,6 +16,11 @@ enum Role {
   SuperAdmin
 }
 
+enum PaymentMethod {
+  CASHONDELIVERY
+  STRIPE
+}
+
 model User {
   id          String   @id @default(uuid())
   name        String
@@ -42,8 +47,7 @@ model Store {
   products   Product[]
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
-  order      Order[]
-  cart       Cart[]
+  Sale       Sale[]
 
   @@unique([userId])
 }
@@ -76,9 +80,9 @@ model Product {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
-  orderItems   OrderItem[]
   cartItems    CartItem[]
   WishListItem WishListItem[]
+  Sale         Sale[]
 }
 
 model Category {
@@ -116,8 +120,6 @@ model Size {
 
 model Cart {
   id        String     @id @default(uuid())
-  storeId   String
-  store     Store      @relation(fields: [storeId], references: [id])
   userId    String
   user      User       @relation(fields: [userId], references: [id])
   cartId    String?
@@ -136,43 +138,26 @@ model CartItem {
 }
 
 model Order {
-  id            String      @id @default(uuid())
-  storeId       String
-  store         Store       @relation(fields: [storeId], references: [id])
-  orderItems    OrderItem[]
+  id            String        @id @default(uuid())
   userId        String
-  user          User        @relation(fields: [userId], references: [id])
-  isPaid        Boolean     @default(false)
-  phone         String      @default("")
-  address       String      @default("")
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  paymentStatus Boolean     @default(false)
-  isDelivered   Boolean     @default(false)
-
-  @@unique([storeId, userId])
-  @@index([storeId])
-}
-
-model OrderItem {
-  id        String   @id @default(uuid())
-  orderId   String
-  orders    Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  productId String
-  product   Product  @relation(fields: [productId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  user          User          @relation(fields: [userId], references: [id])
+  phone         String        @default("")
+  city          String        @default("")
+  houseNo       String        @default("")
+  area          String        @default("")
+  paymentMethod PaymentMethod
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  paymentStatus Boolean       @default(false)
+  isDelivered   Boolean       @default(false)
 }
 
 model Wishlist {
   id            String         @id @default(uuid())
   userId        String
-  storeId       String
   wishListItems WishListItem[]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
-
-  @@unique([userId, storeId])
 }
 
 model WishListItem {
@@ -183,4 +168,23 @@ model WishListItem {
   wishlist   Wishlist @relation(fields: [wishlistId], references: [id], onDelete: Cascade)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+}
+
+model Sale {
+  id        String   @id @default(uuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int
+  storeId   String
+  store     Store    @relation(fields: [storeId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model StripeCustomer {
+  id               String   @id @default(uuid())
+  userId           String   @unique
+  stripeCustomerId String   @unique
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }

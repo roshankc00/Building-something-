@@ -21,7 +21,6 @@ export class WishListService {
     const wishlistExist = await this.prismaDb.wishlist.findFirst({
       where: {
         userId,
-        storeId,
       },
     });
     if (wishlistExist) {
@@ -52,7 +51,6 @@ export class WishListService {
     } else {
       const newWishlist = await this.prismaDb.wishlist.create({
         data: {
-          storeId,
           userId,
         },
       });
@@ -80,7 +78,6 @@ export class WishListService {
   ): Promise<getAllWishlistResponse> {
     return this.prismaDb.wishlist.findFirst({
       where: {
-        storeId,
         userId,
       },
       include: {

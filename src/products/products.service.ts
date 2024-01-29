@@ -67,18 +67,15 @@ export class ProductService {
     return { success: true, message: 'product updated successfully', product };
   }
 
-  async getAllProducts(storeId: string, sortOptions: ProductSortInput) {
+  async getAllProducts(sortOptions: ProductSortInput) {
     const query: {
-      where: {
-        storeId: string;
+      where?: {
         [key: string]: string | { contains: string };
       };
       orderBy?: { [key: string]: 'asc' | 'desc' };
       include: { [key: string]: boolean };
     } = {
-      where: {
-        storeId,
-      },
+      where: {},
       include: {
         images: true,
         size: true,

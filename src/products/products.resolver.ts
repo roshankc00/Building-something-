@@ -29,10 +29,9 @@ export class ProductResolver {
 
   @Query(() => [Product], { name: 'Products' })
   async getAllProducts(
-    @Args('storeId') storeId: string,
     @Args({ name: 'sort', type: () => ProductSortInput, nullable: true })
     sort?: ProductSortInput,
   ) {
-    return this.productService.getAllProducts(storeId, sort);
+    return this.productService.getAllProducts(sort);
   }
 }
