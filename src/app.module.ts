@@ -15,6 +15,7 @@ import { ProductModule } from './products/products.module';
 import { SizesModule } from './sizes/sizes.module';
 import { CartModule } from './cart/cart.module';
 import { WishlistModule } from './wishlist/wishlist.module';
+import { AnalyticsModule } from './analytics/analytics.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { WishlistModule } from './wishlist/wishlist.module';
     ProductModule,
     CartModule,
     WishlistModule,
+    AnalyticsModule,
   ],
   controllers: [],
   providers: [ConfigService, JwtService, PrismaService],
