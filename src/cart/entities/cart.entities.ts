@@ -34,13 +34,7 @@ export class Cart {
   id: string;
 
   @Field()
-  storeId: string;
-
-  @Field()
   userId: string;
-
-  @Field(() => Store, { nullable: true })
-  store?: Store | null;
 
   @Field(() => [CartItem], { nullable: true })
   cartItems?: CartItem[] | null;

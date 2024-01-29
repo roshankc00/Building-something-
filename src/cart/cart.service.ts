@@ -10,13 +10,13 @@ export class CartService {
   async AddToCart(
     @Args('cartDto') cartDto: CartDto,
   ): Promise<AddToCartResponse> {
-    const { productId, storeId, userId } = cartDto;
+    const { productId, userId } = cartDto;
     const cartExist = await this.prismaDb.cart.findFirst({
       where: {
         userId,
-        storeId,
       },
     });
+    console.log(cartExist);
     if (cartExist) {
       const cartItem = await this.prismaDb.cartItem.create({
         data: {
@@ -27,10 +27,8 @@ export class CartService {
       const updcart = await this.prismaDb.cart.findFirst({
         where: {
           userId,
-          storeId,
         },
         include: {
-          store: true,
           cartItems: {
             include: {
               cart: true,
@@ -47,7 +45,6 @@ export class CartService {
     } else {
       const newCart = await this.prismaDb.cart.create({
         data: {
-          storeId,
           userId,
         },
       });
@@ -62,10 +59,8 @@ export class CartService {
       const updcart = await this.prismaDb.cart.findFirst({
         where: {
           userId,
-          storeId,
         },
         include: {
-          store: true,
           cartItems: {
             include: {
               cart: true,
@@ -82,14 +77,12 @@ export class CartService {
     }
   }
 
-  async getAllCartsOfUserOfSpecificStore(storeId: string, userId: string) {
+  async getAllCartsOfUser(storeId: string, userId: string) {
     return await this.prismaDb.cart.findFirst({
       where: {
-        storeId,
         userId,
       },
       include: {
-        store: true,
         cartItems: {
           include: {
             cart: true,

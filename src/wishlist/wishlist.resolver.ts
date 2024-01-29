@@ -20,14 +20,13 @@ export class WishlistResolver {
 
   @UseGuards(AuthGuard)
   @Query(() => getAllWishlistResponse, {
-    name: 'wishlistOfUserOfSpecificStore',
+    name: 'wishlistOfUser',
   })
   async getWishlistItemOfUser(
     @Args('storeId') storeId: string,
     @Context() context,
   ) {
-    return await this.wishlistService.getAllWishlistsOfUserOfSpecificStore(
-      storeId,
+    return await this.wishlistService.getAllWishlistsOfUser(
       context.req.user.id,
     );
   }

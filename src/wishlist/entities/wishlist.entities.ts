@@ -31,9 +31,6 @@ export class Wishlist {
   id: string;
 
   @Field()
-  storeId: string;
-
-  @Field()
   userId: string;
 
   @Field(() => [WishlistItem], { nullable: true })

@@ -17,7 +17,7 @@ export class WishListService {
   async AddToWishlist(
     @Args('wishlistDto') wishListDto: WishListDto,
   ): Promise<AddToWishlistItemResponse> {
-    const { productId, storeId, userId } = wishListDto;
+    const { productId, userId } = wishListDto;
     const wishlistExist = await this.prismaDb.wishlist.findFirst({
       where: {
         userId,
@@ -72,10 +72,7 @@ export class WishListService {
     }
   }
 
-  async getAllWishlistsOfUserOfSpecificStore(
-    storeId: string,
-    userId: string,
-  ): Promise<getAllWishlistResponse> {
+  async getAllWishlistsOfUser(userId: string): Promise<getAllWishlistResponse> {
     return this.prismaDb.wishlist.findFirst({
       where: {
         userId,

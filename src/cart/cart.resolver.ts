@@ -15,13 +15,13 @@ export class CartResolver {
     return this.cartService.AddToCart(addToCartDto);
   }
 
-  @Query(() => Cart, { name: 'CartOfUserOfSpecificStore' })
+  @Query(() => Cart, { name: 'CartOfUser' })
   @UseGuards(AuthGuard)
   async getCartItemOfUser(
     @Args('storeId') storeId: string,
     @Context() context,
   ) {
-    return await this.cartService.getAllCartsOfUserOfSpecificStore(
+    return await this.cartService.getAllCartsOfUser(
       storeId,
       context.req.user.id,
     );

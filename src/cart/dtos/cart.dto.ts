@@ -11,10 +11,5 @@ export class CartDto {
   @Field()
   @IsNotEmpty()
   @IsString({ message: 'productId must be string' })
-  storeId: string;
-
-  @Field()
-  @IsNotEmpty()
-  @IsString({ message: 'productId must be string' })
   userId: string;
 }
