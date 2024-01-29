@@ -3,7 +3,7 @@ import { UseFilters, UseGuards } from '@nestjs/common';
 import { GraphQLErrorFilter } from 'src/core/intercepters/custom.excepter.filter';
 import { AuthGuard } from 'src/core/guards/auth.guard';
 import { AnalyticsService } from './analytics.service';
-import { Analytics } from './entities/analytics.entity';
+import { Analytics, SalesAnalytics } from './entities/analytics.entity';
 import { CreateResponse } from './types/analytics.types';
 
 @UseFilters(GraphQLErrorFilter)
@@ -34,5 +34,14 @@ export class AnalyticsResolver {
   @Query(() => [Analytics], { name: 'getStoreAnalytics' })
   async getStoreAnalytics() {
     return await this.analyticsService.GetUserAnalytics();
+  }
+
+  @Query(() => [SalesAnalytics], { name: 'getStoreAnalytics' })
+  async getSaleAnalyticsForAdmin() {
+    return await this.analyticsService.storeAnalyticsForAdmin();
+  }
+  @Query(() => [SalesAnalytics], { name: 'getStoreAnalytics' })
+  async getSaleAnalyticsForSale(@Args('storeId') storeId: string) {
+    return await this.analyticsService.sellAnalyticsForStore(storeId);
   }
 }

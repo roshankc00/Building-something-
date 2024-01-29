@@ -8,3 +8,12 @@ export class Analytics {
   @Field()
   count: number;
 }
+
+@ObjectType()
+export class SalesAnalytics {
+  @Field()
+  month: string;
+
+  @Field()
+  income: number;
+}
